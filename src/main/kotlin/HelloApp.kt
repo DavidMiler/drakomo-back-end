@@ -1,6 +1,7 @@
 package src.main.kotlin
 
 import io.ktor.application.*
+import io.ktor.features.DefaultHeaders
 import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -13,7 +14,15 @@ fun main(args: Array<String>) {
             get("/") {
                 call.respondText("Hello, world!", ContentType.Text.Html)
             }
+            get("/health"){
+                call.respondText("OK", ContentType.Text.Any)
+            }
+        }
+        this.install(DefaultHeaders){
+            header("X-Developer", "David Miler")
         }
     }
+
+
     server.start(wait = true)
 }

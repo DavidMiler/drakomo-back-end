@@ -13,6 +13,7 @@ buildscript {
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.3.0'
+    id 'com.github.johnrengelman.shadow' version '2.0.2' //Plugin for building fat runnable jars
 }
 
 group 'Drakomo'
@@ -41,3 +42,15 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+task runServer(type: JavaExec) {
+    main = 'src.main.kotlin.HelloAppKt'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+// tell the jar which class to startup in.
+jar {
+    manifest {
+        attributes 'Main-Class': 'src.main.kotlin.HelloAppKt'
+    }
+}   
